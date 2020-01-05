@@ -1,0 +1,6 @@
+fpga/output_files
+fpga/db
+fpga/simulation
+fpga/greybox_tmp
+fpga/incremental_db
+fpga/timing
