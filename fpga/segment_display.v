@@ -91,8 +91,11 @@ module segment_display
 	end
 
 	always @(posedge clk or posedge rst) begin
-		if(rst)
+		if(rst) begin
 			current_digit <= 0;
+			current_dp <= 0;
+			select <= 0;
+		end
 		else begin
 			case(sel)
 			2'b00:

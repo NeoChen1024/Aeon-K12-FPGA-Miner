@@ -4,3 +4,4 @@ fpga/simulation
 fpga/greybox_tmp
 fpga/incremental_db
 fpga/timing
+*.rpt
