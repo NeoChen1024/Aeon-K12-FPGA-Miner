@@ -1,0 +1,3 @@
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/NeoChen1024/Aeon-K12-FPGA-Miner-Frontend.git
