@@ -16,23 +16,23 @@ digraph "Aeon K12 FPGA Miner Architecture"
 	host_uart [label="Host UART"]
 
 	subgraph cluster_fpga {
-	    label = "FPGA";
+		label = "FPGA";
 
 		uart -> fifo [dir=both]
 		fifo -> cfsm [dir=both]
-		fifo -> isr
 		cfsm -> isr
 		isr -> nc
+		fifo -> isr
 		cfsm -> nc [dir=both]
 		nc -> pow [dir=both]
 		nc -> osr
 		osr -> fifo
+		cfsm -> osr [dir=both]
 	}
 	subgraph cluster_host {
-	    label = "HOST";
+		label = "HOST";
 
 		frontend -> host_uart [dir=both]
 		host_uart -> uart [dir=both]
 	}
-
 }
