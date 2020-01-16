@@ -6,3 +6,4 @@ fpga/incremental_db
 fpga/timing
 *.rpt
 *.bak
+*.qws

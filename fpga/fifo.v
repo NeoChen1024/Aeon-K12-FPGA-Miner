@@ -84,7 +84,7 @@ module fifo (
 	defparam
 		scfifo_component.add_ram_output_register = "ON",
 		scfifo_component.intended_device_family = "Cyclone IV E",
-		scfifo_component.lpm_numwords = 256,
+		scfifo_component.lpm_numwords = 1024,
 		scfifo_component.lpm_showahead = "OFF",
 		scfifo_component.lpm_type = "scfifo",
 		scfifo_component.lpm_width = 8,

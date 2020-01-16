@@ -4,7 +4,7 @@ module nonce_sr
 	input wire clk,
 	input wire en,
 	input wire [7:0] data_in,
-	output reg [1599:0] data_out
+	output reg [576:0] data_out
 );
 
 always @(posedge clk or posedge rst) begin

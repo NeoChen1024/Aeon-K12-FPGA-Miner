@@ -6,10 +6,11 @@ digraph "Aeon K12 FPGA Miner Architecture"
 	node [shape=box]
 	pow [label="K12 PoW Cores (x7)"]
 	nsc [label="Nonce Scanning Controller"]
-	cfsm [label="Control Finite State Machine"]
-	uart [label="UART I/O"]
+	ifsm [label="Input Finite State Machine"]
+	ofsm [label="Output Finite State Machine"]
+	uart [label="UART"]
 	fifo [label="Nonce & Hash FIFO"]
-	bisr [label="Blob Input Shift Register"]
+	bisr [label="Blob & Target Input Shift Register"]
 	nhsr [label="Nonce & Hash Shift Register"]
 	gctr [label="Global Nonce Counter"]
 
@@ -19,14 +20,16 @@ digraph "Aeon K12 FPGA Miner Architecture"
 	subgraph cluster_fpga {
 		label = "FPGA";
 
-		uart -> cfsm [dir=both]
-		cfsm -> bisr
+		uart -> ifsm
+		ofsm -> uart
+		ifsm -> bisr
 		uart -> bisr
 		bisr -> nsc
-		nsc -> pow [dir=both]
+		nsc -> pow
 		pow -> fifo
 		fifo -> nhsr
-		nhsr -> cfsm
+		nhsr -> ofsm
+		nhsr -> uart
 		gctr -> pow
 	}
 	subgraph cluster_host {
