@@ -141,7 +141,7 @@ K12_Hash hasher
 	.valid(valid)
 );
 
-assign hashinput = {256'h0, 64'h8000000000000000, 576'h0, 64'h700, blob[575:376], nonce, blob[311:0]};
+assign hashinput = {256'h0, 64'h8000000000000000, 576'h0, 64'h700, blob[575:312], nonce, blob[311:0]};
 
 // Check if hash is small than target
 always @(posedge clk) begin
