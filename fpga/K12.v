@@ -114,3 +114,56 @@ always @(posedge clk or posedge start or posedge rst) begin
 end
 
 endmodule
+
+module K12_PoW
+(
+	input wire clk,
+	input wire rst,
+	input wire load,
+	input wire [63:0] target,
+	input wire [63:0] nonce,
+	input wire [575:0] blob,
+	output reg [255:0] outputhash,	// Tri-state
+	output reg store		// Store into FIFO
+);
+
+wire valid;
+wire [1599:0] hashinput;
+wire [255:0] hashoutput;
+
+K12_Hash hasher
+(
+	.clk(clk),
+	.rst(rst),
+	.start(load),
+	.data(hashinput),
+	.hash(hashoutput),
+	.valid(valid)
+);
+
+assign hashinput = {256'h0, 64'h8000000000000000, 576'h0, 64'h700, blob[575:376], nonce, blob[311:0]};
+
+// Check if hash is small than target
+always @(posedge clk) begin
+	if(valid) begin
+		if(hashoutput[255-:64] < target) begin
+			outputhash <= hashoutput;
+			store <= 1;
+		end
+		else begin
+			store <= 0;
+		end
+	end
+	else begin
+		outputhash <= {255{1'bZ}};
+		store <= 0;
+	end
+end
+
+always @(posedge clk or posedge rst or posedge load) begin
+	if(rst | load) begin
+		outputhash <= {255{1'bZ}};
+		store <= 0;
+	end
+end
+endmodule
