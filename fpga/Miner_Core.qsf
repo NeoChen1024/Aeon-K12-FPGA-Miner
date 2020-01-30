@@ -19,7 +19,7 @@
 #
 # Quartus Prime
 # Version 19.1.0 Build 670 09/22/2019 SJ Lite Edition
-# Date created = 14:57:26  January 04, 2020
+# Date created = 17:21:05  January 30, 2020
 #
 # -------------------------------------------------------------------------- #
 #
@@ -41,13 +41,17 @@ set_global_assignment -name FAMILY "Cyclone IV E"
 set_global_assignment -name DEVICE EP4CE15F23C8
 set_global_assignment -name TOP_LEVEL_ENTITY Miner_Core
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 19.1.0
-set_global_assignment -name PROJECT_CREATION_TIME_DATE "14:57:26  JANUARY 04, 2020"
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "17:21:05  JANUARY 30, 2020"
 set_global_assignment -name LAST_QUARTUS_VERSION "19.1.0 Lite Edition"
-set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
 set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
-set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 1
-set_global_assignment -name NOMINAL_CORE_SUPPLY_VOLTAGE 1.2V
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "NO HEAT SINK WITH STILL AIR"
+set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name TIMING_ANALYZER_MULTICORNER_ANALYSIS ON
+set_global_assignment -name NUM_PARALLEL_PROCESSORS 2
 set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (Verilog)"
 set_global_assignment -name EDA_TIME_SCALE "1 ps" -section_id eda_simulation
 set_global_assignment -name EDA_OUTPUT_DATA_FORMAT "VERILOG HDL" -section_id eda_simulation
@@ -57,58 +61,33 @@ set_global_assignment -name EDA_OUTPUT_DATA_FORMAT STAMP -section_id eda_board_d
 set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST OFF -section_id eda_board_design_symbol
 set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST OFF -section_id eda_board_design_signal_integrity
 set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST OFF -section_id eda_board_design_boundary_scan
-set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
-set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
-set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name VERILOG_FILE sr.v
+set_global_assignment -name VERILOG_FILE ctrl.v
+set_global_assignment -name VERILOG_FILE segment_display.v
+set_global_assignment -name QIP_FILE pll.qip
+set_global_assignment -name VERILOG_FILE k12_testbench.v
+set_global_assignment -name VERILOG_FILE Miner_Core.v
+set_global_assignment -name VERILOG_FILE KeccakF1600.v
+set_global_assignment -name VERILOG_FILE K12.v
+set_global_assignment -name VERILOG_FILE fsm.v
+set_global_assignment -name VERILOG_FILE uart.v
+set_global_assignment -name QIP_FILE nonce_fifo.qip
+set_global_assignment -name POWER_USE_DEVICE_CHARACTERISTICS MAXIMUM
+set_global_assignment -name OPTIMIZATION_MODE "AGGRESSIVE PERFORMANCE"
+set_location_assignment PIN_E3 -to led
+set_location_assignment PIN_J4 -to reset_button
+set_location_assignment PIN_W19 -to segment[7]
 set_location_assignment PIN_U19 -to segment[6]
 set_location_assignment PIN_W17 -to segment[5]
 set_location_assignment PIN_W15 -to segment[4]
 set_location_assignment PIN_Y17 -to segment[3]
 set_location_assignment PIN_W20 -to segment[2]
-set_location_assignment PIN_V15 -to segment[0]
 set_location_assignment PIN_U20 -to segment[1]
-set_location_assignment PIN_W19 -to segment[7]
-set_location_assignment PIN_E3 -to led
-set_location_assignment PIN_Y13 -to sel[2]
+set_location_assignment PIN_V15 -to segment[0]
 set_location_assignment PIN_V13 -to sel[0]
 set_location_assignment PIN_W13 -to sel[1]
+set_location_assignment PIN_Y13 -to sel[2]
 set_location_assignment PIN_Y21 -to uart_rx
 set_location_assignment PIN_Y22 -to uart_tx
-set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "NO HEAT SINK WITH STILL AIR"
-set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
-set_global_assignment -name FLOW_ENABLE_POWER_ANALYZER ON
-set_global_assignment -name POWER_DEFAULT_INPUT_IO_TOGGLE_RATE 100%
-set_global_assignment -name TIMING_ANALYZER_MULTICORNER_ANALYSIS ON
-set_global_assignment -name NUM_PARALLEL_PROCESSORS ALL
-set_global_assignment -name ENABLE_SIGNALTAP ON
-set_global_assignment -name USE_SIGNALTAP_FILE output_files/stp1.stp
-set_global_assignment -name OPTIMIZATION_MODE "AGGRESSIVE PERFORMANCE"
-set_global_assignment -name POWER_USE_DEVICE_CHARACTERISTICS MAXIMUM
-set_global_assignment -name ENABLE_DRC_SETTINGS ON
-set_global_assignment -name POWER_DEFAULT_TOGGLE_RATE 100%
-set_global_assignment -name POWER_USE_PVA OFF
 set_location_assignment PIN_T2 -to xtal_osc
-set_location_assignment PIN_J4 -to reset_button
-set_global_assignment -name EDA_TEST_BENCH_ENABLE_STATUS TEST_BENCH_MODE -section_id eda_simulation
-set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH k12_testbench -section_id eda_simulation
-set_global_assignment -name EDA_TEST_BENCH_NAME k12_testbench -section_id eda_simulation
-set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id k12_testbench
-set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME k12_testbench -section_id k12_testbench
-set_global_assignment -name VERILOG_FILE k12_testbench.v
-set_global_assignment -name VERILOG_FILE K12.v
-set_global_assignment -name VERILOG_FILE KeccakF1600.v
-set_global_assignment -name VERILOG_FILE counter_testbench.v
-set_global_assignment -name VERILOG_FILE uart.v
-set_global_assignment -name SDC_FILE Miner_Core.sdc
-set_global_assignment -name VERILOG_FILE Miner_Core.v
-set_global_assignment -name VERILOG_FILE segment_display.v
-set_global_assignment -name QIP_FILE pll.qip
-set_global_assignment -name QIP_FILE fifo.qip
-set_global_assignment -name VERILOG_FILE nonce_sr.v
-set_global_assignment -name EDA_TEST_BENCH_FILE k12_testbench.v -section_id k12_testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE K12.v -section_id k12_testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE KeccakF1600.v -section_id k12_testbench
-set_global_assignment -name VHDL_INPUT_VERSION VHDL_2008
-set_global_assignment -name VHDL_SHOW_LMF_MAPPING_MESSAGES OFF
-set_global_assignment -name ENABLE_LOGIC_ANALYZER_INTERFACE OFF
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

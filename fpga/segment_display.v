@@ -1,5 +1,4 @@
 `timescale 1ns/1ps
-`define period (16'd1000 - 1)
 
 // 4 Bit hexdecimal to 7 segment
 module segment_encoder
@@ -59,15 +58,15 @@ endmodule
 // Whole module
 module segment_display
 (
-	input clk,
-	input rst,
-	input [11:0] data,
-	input [2:0] dp,
+	input wire clk,
+	input wire rst,
+	input wire update,
+	input wire [14:0] data,
 	output wire [7:0] segment,
 	output reg [2:0] select
 );
 
-	reg [15:0] counter;
+	reg [14:0] display_data;
 	reg [1:0] sel;
 	reg [3:0] current_digit;
 	reg current_dp;
@@ -81,13 +80,11 @@ module segment_display
 		.segment(segment)
 	);
 
-	always @(posedge clk or posedge rst) begin
+	always @(posedge rst or posedge update) begin
 		if(rst)
-			counter <= 0;
-		else if(counter == (`period))
-			counter <= 0;
+			display_data <= 0;
 		else
-			counter <= counter + 1'b1;
+			display_data <= data;
 	end
 
 	always @(posedge clk or posedge rst) begin
@@ -95,29 +92,27 @@ module segment_display
 			current_digit <= 0;
 			current_dp <= 0;
 			select <= 0;
+			sel <= 0;
 		end
 		else begin
+			sel <= sel + 1;
 			case(sel)
-			2'b00:
-				if(counter == (`period))	sel <= sel + 1'b1;
-				else begin
-					current_digit <= data[3:0];
-					current_dp <= ~dp[0];
+				2'b00: begin
+					current_digit <= display_data[3:0];
+					current_dp <= ~display_data[12];
 					select <= 3'b001;
 				end
-			2'b01:
-				if(counter == (`period))	sel <= sel + 1'b1;
-				else begin
-					current_digit <= data[7:4];
-					current_dp <= ~dp[1];
+				2'b01: begin
+					current_digit <= display_data[7:4];
+					current_dp <= ~display_data[13];
 					select <= 3'b010;
 				end
-			2'b10:
-				if(counter == (`period))	sel <= 0;
-				else begin
-					current_digit <= data[11:8];
-					current_dp <= ~dp[2];
+				2'b10: begin
+					current_digit <= display_data[11:8];
+					current_dp <= ~display_data[14];
 					select <= 3'b100;
+				end
+				2'b11: begin
 				end
 			endcase
 		end

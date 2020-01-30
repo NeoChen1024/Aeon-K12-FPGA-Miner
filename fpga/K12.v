@@ -116,14 +116,18 @@ end
 endmodule
 
 module K12_PoW
+#(
+	parameter CORE=0,	// Index number of this core
+	parameter NCORE=1	// Total number of cores
+)
 (
-	input wire clk,
-	input wire rst,
-	input wire load,
-	input wire [63:0] target,
-	input wire [63:0] nonce,
-	input wire [575:0] blob,
-	output reg [255:0] outputhash,	// Tri-state
+	input wire clk,		// Clock
+	input wire rst,		// Reset
+	input wire start,	// Increment counter & start hash
+	input wire load,	// Signal to load blob and restart counter
+	input wire [63:0] target,	// Target
+	input wire [575:0] blob,	// Blob
+	output reg [63:0] nonce,	// Tri-state nonce output
 	output reg store		// Store into FIFO
 );
 
@@ -131,39 +135,50 @@ wire valid;
 wire [1599:0] hashinput;
 wire [255:0] hashoutput;
 
+reg [63:0] _nonce;	// Internal Nonce Counter
+reg [63:0] _lastnonce;	// Last Nonce
+reg [63:0] _target;	// Internal one, to reduce latency
+
 K12_Hash hasher
 (
 	.clk(clk),
 	.rst(rst),
-	.start(load),
+	.start(start),
 	.data(hashinput),
 	.hash(hashoutput),
 	.valid(valid)
 );
 
+// Combine nonce & blob
 assign hashinput = {256'h0, 64'h8000000000000000, 576'h0, 64'h700, blob[575:312], nonce, blob[311:0]};
 
-// Check if hash is small than target
-always @(posedge clk) begin
-	if(valid) begin
-		if(hashoutput[255-:64] < target) begin
-			outputhash <= hashoutput;
+// Check if hash is smaller than target
+always @(posedge clk or posedge rst) begin
+	if(rst) begin
+		nonce <= {64{1'bZ}};
+		store <= 0;
+	end
+	else begin
+		if(valid && (hashoutput[255-:64] < _target)) begin
+			nonce <= _lastnonce;
 			store <= 1;
 		end
 		else begin
+			nonce <= {64{1'bZ}};
 			store <= 0;
 		end
 	end
-	else begin
-		outputhash <= {255{1'bZ}};
-		store <= 0;
+end
+
+always @(posedge rst or posedge load or posedge start) begin
+	if(rst || load) begin
+		_nonce <= CORE;
+		_target <= target;
+	end
+	else if(start) begin
+		_nonce <= _nonce + NCORE;	// Increment for every start
+		_lastnonce <= _nonce;
 	end
 end
 
-always @(posedge clk or posedge rst or posedge load) begin
-	if(rst | load) begin
-		outputhash <= {255{1'bZ}};
-		store <= 0;
-	end
-end
 endmodule
