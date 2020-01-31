@@ -12,6 +12,7 @@ digraph "Aeon K12 FPGA Miner Architecture"
 	fifo [label="Nonce & Hash FIFO"]
 	bisr [label="Blob & Target Input Shift Register"]
 	nhsr [label="Nonce & Hash Shift Register"]
+	disp [label="Nonce Segment Display"]
 
 	frontend [label="FPGA Mining Frontend"]
 	host_uart [label="Host UART"]
@@ -26,6 +27,7 @@ digraph "Aeon K12 FPGA Miner Architecture"
 		bisr -> nsc
 		nsc -> pow
 		pow -> fifo
+		pow -> disp
 		fifo -> nhsr
 		nhsr -> ofsm
 		nhsr -> uart
