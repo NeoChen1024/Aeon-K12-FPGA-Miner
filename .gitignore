@@ -11,3 +11,4 @@ fpga/timing
 *.smsg
 *.done
 *.jdi
+*.sof
