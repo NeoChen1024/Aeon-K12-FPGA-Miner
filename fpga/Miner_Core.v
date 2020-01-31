@@ -44,7 +44,6 @@ module Miner_Core
 
 	wire [639:0] job_bus; // High 72 bytes: blob, low 8 bytes: target
 
-	assign led = ~(receiving | transmitting);	// low-active
 	assign reset = ~reset_button;
 
 	// Display Format:
@@ -52,6 +51,8 @@ module Miner_Core
 	// DP[0] is FIFO full
 	assign display = {fifo_full, 2'b00, nonce_bus[63:52]};
 
+	// LED indicator
+	assign led = halt;	// low-active
 
 	// 7 segment display driver
 	segment_display disp0

@@ -5,8 +5,8 @@ module ifsm
 	input wire clk,
 	input wire rst,
 	input wire uart_recv,
-	output reg receiving,	// To reset other component
-	output reg received	// To restore nonce controller
+	output reg receiving,	// To stop other component during receiving
+	output reg received	// To nonce controller
 );
 
 // States

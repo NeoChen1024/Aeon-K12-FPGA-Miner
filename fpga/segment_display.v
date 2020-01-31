@@ -113,6 +113,7 @@ module segment_display
 					select <= 3'b100;
 				end
 				2'b11: begin
+					select <= 3'b000;
 				end
 			endcase
 		end
