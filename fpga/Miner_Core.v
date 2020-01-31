@@ -94,7 +94,7 @@ module Miner_Core
 
 	job_sr job_sr0
 	(
-		.clk(received), // UART received
+		.load(received), // UART received
 		.rst(rst),
 		.data_in(rx_data),
 		.data_out(job_bus)
@@ -121,9 +121,8 @@ module Miner_Core
 
 	nonce_sr nonce_sr0
 	(
-		.clk(clk_hf),
 		.rst(rst),
-		.en(transmit),
+		.out(transmit),
 		.load(nonce_sr_load),
 		.nonce(nonce_sr_in),
 		.data_out(tx_data)
@@ -131,7 +130,7 @@ module Miner_Core
 
 	controller
 	#(
-		.NCORE(2)
+		.NCORE(2) // Possible value: 2, 7, 14
 	) c0
 	(
 		.clk(clk_hf),
