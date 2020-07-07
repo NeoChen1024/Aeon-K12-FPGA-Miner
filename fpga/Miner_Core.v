@@ -95,7 +95,7 @@ module Miner_Core
 	job_sr job_sr0
 	(
 		.load(received), // UART received
-		.rst(rst),
+		.rst(reset),
 		.data_in(rx_data),
 		.data_out(job_bus)
 	);
@@ -103,7 +103,7 @@ module Miner_Core
 	ifsm ifsm0
 	(
 		.clk(clk_hf),
-		.rst(rst),
+		.rst(reset),
 		.uart_recv(received),
 		.receiving(halt),
 		.received(load)
@@ -112,7 +112,7 @@ module Miner_Core
 	ofsm ofsm0
 	(
 		.clk(clk_hf),
-		.rst(rst),
+		.rst(reset),
 		.avail(~fifo_empty),
 		.tx_idle(~transmitting),
 		.transmit(transmit),
@@ -121,7 +121,7 @@ module Miner_Core
 
 	nonce_sr nonce_sr0
 	(
-		.rst(rst),
+		.rst(reset),
 		.out(transmit),
 		.load(nonce_sr_load),
 		.nonce(nonce_sr_in),
@@ -134,7 +134,7 @@ module Miner_Core
 	) c0
 	(
 		.clk(clk_hf),
-		.rst(rst),
+		.rst(reset),
 		.load(load),
 		.halt(halt),
 		.job(job_bus),
@@ -144,7 +144,7 @@ module Miner_Core
 
 	nonce_fifo	nonce_fifo0
 	(
-		.aclr (rst),
+		.aclr (reset),
 		.clock (clk_hf),
 		.data (nonce_bus),
 		.rdreq (fifo_rd),

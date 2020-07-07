@@ -95,7 +95,7 @@ module segment_display
 			sel <= 0;
 		end
 		else begin
-			sel <= sel + 1;
+			sel <= sel + 1'b1;
 			case(sel)
 				2'b00: begin
 					current_digit <= display_data[3:0];

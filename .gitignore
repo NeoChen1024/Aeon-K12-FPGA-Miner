@@ -12,3 +12,4 @@ fpga/timing
 *.done
 *.jdi
 *.sof
+*.cdf

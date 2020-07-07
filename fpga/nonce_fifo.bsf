@@ -1,0 +1,107 @@
+/*
+WARNING: Do NOT edit the input and output ports in this file in a text
+editor if you plan to continue editing the block that represents it in
+the Block Editor! File corruption is VERY likely to occur.
+*/
+/*
+Copyright (C) 2020  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
+*/
+(header "symbol" (version "1.2"))
+(symbol
+	(rect 0 0 176 192)
+	(text "nonce_fifo" (rect 58 0 129 16)(font "Arial" (font_size 10)))
+	(text "inst" (rect 8 177 26 188)(font "Arial" ))
+	(port
+		(pt 0 48)
+		(input)
+		(text "data[63..0]" (rect 0 0 61 13)(font "Arial" (font_size 8)))
+		(text "data[63..0]" (rect 20 42 72 54)(font "Arial" (font_size 8)))
+		(line (pt 0 48)(pt 16 48)(line_width 3))
+	)
+	(port
+		(pt 0 72)
+		(input)
+		(text "wrreq" (rect 0 0 34 13)(font "Arial" (font_size 8)))
+		(text "wrreq" (rect 20 66 50 78)(font "Arial" (font_size 8)))
+		(line (pt 0 72)(pt 16 72))
+	)
+	(port
+		(pt 0 88)
+		(input)
+		(text "rdreq" (rect 0 0 31 13)(font "Arial" (font_size 8)))
+		(text "rdreq" (rect 20 82 47 94)(font "Arial" (font_size 8)))
+		(line (pt 0 88)(pt 16 88))
+	)
+	(port
+		(pt 0 112)
+		(input)
+		(text "clock" (rect 0 0 31 13)(font "Arial" (font_size 8)))
+		(text "clock" (rect 20 106 47 118)(font "Arial" (font_size 8)))
+		(line (pt 0 112)(pt 16 112))
+	)
+	(port
+		(pt 0 136)
+		(input)
+		(text "aclr" (rect 0 0 22 13)(font "Arial" (font_size 8)))
+		(text "aclr" (rect 20 130 39 142)(font "Arial" (font_size 8)))
+		(line (pt 0 136)(pt 16 136))
+	)
+	(port
+		(pt 176 48)
+		(output)
+		(text "q[63..0]" (rect 0 0 43 13)(font "Arial" (font_size 8)))
+		(text "q[63..0]" (rect 121 42 158 54)(font "Arial" (font_size 8)))
+		(line (pt 176 48)(pt 160 48)(line_width 3))
+	)
+	(port
+		(pt 176 72)
+		(output)
+		(text "full" (rect 0 0 16 13)(font "Arial" (font_size 8)))
+		(text "full" (rect 144 66 158 78)(font "Arial" (font_size 8)))
+		(line (pt 176 72)(pt 160 72))
+	)
+	(port
+		(pt 176 88)
+		(output)
+		(text "empty" (rect 0 0 36 13)(font "Arial" (font_size 8)))
+		(text "empty" (rect 127 82 158 94)(font "Arial" (font_size 8)))
+		(line (pt 176 88)(pt 160 88))
+	)
+	(port
+		(pt 176 104)
+		(output)
+		(text "usedw[11..0]" (rect 0 0 73 13)(font "Arial" (font_size 8)))
+		(text "usedw[11..0]" (rect 96 98 159 110)(font "Arial" (font_size 8)))
+		(line (pt 176 104)(pt 160 104)(line_width 3))
+	)
+	(drawing
+		(text "(ack)" (rect 50 84 122 178)(font "Arial" ))
+		(text "64 bits x 4096 words" (rect 72 134 232 278)(font "Arial" ))
+		(line (pt 16 124)(pt 160 124))
+		(line (pt 16 32)(pt 160 32))
+		(line (pt 160 32)(pt 160 178))
+		(line (pt 160 178)(pt 16 178))
+		(line (pt 16 178)(pt 16 32))
+		(line (pt 0 0)(pt 177 0))
+		(line (pt 177 0)(pt 177 196))
+		(line (pt 0 196)(pt 177 196))
+		(line (pt 0 0)(pt 0 196))
+		(line (pt 0 0)(pt 0 0))
+		(line (pt 0 0)(pt 0 0))
+		(line (pt 0 0)(pt 0 0))
+		(line (pt 0 0)(pt 0 0))
+	)
+)

@@ -29,7 +29,7 @@ always @(posedge uart_recv or posedge rst or posedge clr) begin
 		if(clr)
 			ctr <= 0;
 		else
-			ctr <= ctr + 1;
+			ctr <= ctr + 1'b1;
 	end
 end
 
@@ -115,7 +115,7 @@ always @(posedge clk) begin
 				end
 			end
 			TXED: begin
-				ctr <= ctr + 1;
+				ctr <= ctr + 1'b1;
 				transmit <= 0;
 				state <= WAIT;
 			end

@@ -108,7 +108,7 @@ always @(posedge clk or posedge start or posedge rst) begin
 			default:
 				;	// No-op
 		endcase
-		state <= state + 1;
+		state <= state + 1'b1;
 		imm <= roundoutput; // Feedback
 	end
 end

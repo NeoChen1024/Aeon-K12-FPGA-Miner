@@ -30,7 +30,7 @@ always @(posedge clk or posedge rst or posedge load) begin
 			if(select == 0)
 				select <= 1;
 			else
-				{select[0], select[6:1]} <= select;
+				select <= {select[12:0],select[13]};
 		end
 	end
 end
