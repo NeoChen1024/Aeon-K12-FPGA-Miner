@@ -31,8 +31,11 @@ module Miner_Core
 	wire fifo_full;
 	wire fifo_wr;
 	wire fifo_rd;
+	wire fifo_clr;
 	wire [63:0] nonce_bus;
 	wire [63:0] nonce_sr_in;
+
+	wire nonce_sr_load;
 
 	assign fifo_rd = nonce_sr_load;
 
@@ -47,7 +50,7 @@ module Miner_Core
 	assign reset = ~reset_button;
 
 	// Display Format:
-	// Digits: 0 1 2
+	// Digits: 2 1 0
 	// DP[0] is FIFO full
 	assign display = {fifo_full, 2'b00, nonce_bus[63:52]};
 
@@ -100,13 +103,15 @@ module Miner_Core
 		.data_out(job_bus)
 	);
 
+
 	ifsm ifsm0
 	(
 		.clk(clk_hf),
 		.rst(reset),
 		.uart_recv(received),
 		.receiving(halt),
-		.received(load)
+		.received(load),
+		.clr(fifo_clr)
 	);
 
 	ofsm ofsm0
@@ -144,14 +149,14 @@ module Miner_Core
 
 	nonce_fifo	nonce_fifo0
 	(
-		.aclr (reset),
+		.aclr (reset | fifo_clr),
 		.clock (clk_hf),
 		.data (nonce_bus),
 		.rdreq (fifo_rd),
 		.wrreq (fifo_wr),
 		.empty (fifo_empty),
 		.full (fifo_full),
-		.q (nonce_sr_in),
+		.q (nonce_sr_in)
 		//.usedw()
 	);
 endmodule

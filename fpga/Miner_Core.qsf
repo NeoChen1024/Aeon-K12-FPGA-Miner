@@ -93,7 +93,6 @@ set_global_assignment -name VERILOG_FILE sr.v
 set_global_assignment -name VERILOG_FILE ctrl.v
 set_global_assignment -name VERILOG_FILE segment_display.v
 set_global_assignment -name QIP_FILE pll.qip
-set_global_assignment -name VERILOG_FILE k12_testbench.v
 set_global_assignment -name VERILOG_FILE Miner_Core.v
 set_global_assignment -name VERILOG_FILE KeccakF1600.v
 set_global_assignment -name VERILOG_FILE K12.v

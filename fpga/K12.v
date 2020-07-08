@@ -19,19 +19,19 @@ reg [1599:0] imm;	// Intermediate value
 
 // FSM states
 parameter	//	(Reset)	Start
-		_R0	= 0,
-		_R1	= 1,
-		_R2	= 2,
-		_R3	= 3,
-		_R4	= 4,
-		_R5	= 5,
-		_R6	= 6,
-		_R7	= 7,
-		_R8	= 8,
-		_R9	= 9,
-		_R10	= 10,
-		_R11	= 11,	// Valid Output
-		_END	= 12;
+		_R0	= 4'd0,
+		_R1	= 4'd1,
+		_R2	= 4'd2,
+		_R3	= 4'd3,
+		_R4	= 4'd4,
+		_R5	= 4'd5,
+		_R6	= 4'd6,
+		_R7	= 4'd7,
+		_R8	= 4'd8,
+		_R9	= 4'd9,
+		_R10	= 4'd10,
+		_R11	= 4'd11,	// Valid Output
+		_END	= 4'd12;
 
 parameter
 	_RND0	= 64'h000000008000808b,
@@ -138,6 +138,7 @@ wire [255:0] hashoutput;
 reg [63:0] _nonce;	// Internal Nonce Counter
 reg [63:0] _lastnonce;	// Last Nonce
 reg [63:0] _target;	// Internal one, to reduce latency
+reg [575:0] _blob; // Same as above
 
 K12_Hash hasher
 (
@@ -150,7 +151,7 @@ K12_Hash hasher
 );
 
 // Combine nonce & blob
-assign hashinput = {256'h0, 64'h8000000000000000, 576'h0, 64'h700, blob[575:312], nonce, blob[311:0]};
+assign hashinput = {256'h0, 64'h8000000000000000, 576'h0, 64'h700, blob[575:312], _nonce, _blob[311:0]};
 
 // Check if hash is smaller than target
 always @(posedge clk or posedge rst) begin
@@ -174,10 +175,11 @@ always @(posedge rst or posedge load or posedge start) begin
 	if(rst || load) begin
 		_nonce <= CORE;
 		_target <= target;
+		_blob <= blob;
 	end
 	else if(start) begin
 		_nonce <= _nonce + NCORE;	// Increment for every start
-		_lastnonce <= _nonce;
+		_lastnonce <= 64'h0;
 	end
 end
 

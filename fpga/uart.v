@@ -87,15 +87,15 @@ always @(posedge clk) begin
 	// reaches 0, 1/16 of the bit period has elapsed.
    // Countdown timers for the receiving and transmitting
 	// state machines are decremented.
-	rx_clk_divider = rx_clk_divider - 1;
+	rx_clk_divider = rx_clk_divider - 1'b1;
 	if (!rx_clk_divider) begin
 		rx_clk_divider = CLOCK_DIVIDE;
-		rx_countdown = rx_countdown - 1;
+		rx_countdown = rx_countdown - 1'b1;
 	end
-	tx_clk_divider = tx_clk_divider - 1;
+	tx_clk_divider = tx_clk_divider - 1'b1;
 	if (!tx_clk_divider) begin
 		tx_clk_divider = CLOCK_DIVIDE;
-		tx_countdown = tx_countdown - 1;
+		tx_countdown = tx_countdown - 1'b1;
 	end
 	
 	// Receive state machine
@@ -135,7 +135,7 @@ always @(posedge clk) begin
 				// have more to get.
 				rx_data = {rx, rx_data[7:1]};
 				rx_countdown = 4;
-				rx_bits_remaining = rx_bits_remaining - 1;
+				rx_bits_remaining = rx_bits_remaining - 1'b1;
 				recv_state = rx_bits_remaining ? RX_READ_BITS : RX_CHECK_STOP;
 			end
 		end
@@ -189,7 +189,7 @@ always @(posedge clk) begin
 		TX_SENDING: begin
 			if (!tx_countdown) begin
 				if (tx_bits_remaining) begin
-					tx_bits_remaining = tx_bits_remaining - 1;
+					tx_bits_remaining = tx_bits_remaining - 1'b1;
 					tx_out = tx_data[0];
 					tx_data = {1'b0, tx_data[7:1]};
 					tx_countdown = 4;

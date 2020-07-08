@@ -6,7 +6,8 @@ module ifsm
 	input wire rst,
 	input wire uart_recv,
 	output reg receiving,	// To stop other component during receiving
-	output reg received	// To nonce controller
+	output reg received,	// To nonce controller
+	output reg clr // To FIFO
 );
 
 // States
@@ -20,17 +21,14 @@ parameter DONE	= 4;
 
 reg [6:0] ctr;
 reg [2:0] state;
-reg clr;
 
 always @(posedge uart_recv or posedge rst or posedge clr) begin
 	if(rst)
 		ctr <= 0;
-	else begin
-		if(clr)
-			ctr <= 0;
-		else
-			ctr <= ctr + 1'b1;
-	end
+	else if(clr)
+		ctr <= 0;
+	else
+		ctr <= ctr + 1'b1;
 end
 
 always @(posedge clk or posedge rst) begin
