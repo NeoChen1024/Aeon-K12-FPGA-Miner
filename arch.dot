@@ -4,7 +4,7 @@ digraph "Aeon K12 FPGA Miner Architecture"
 	label="Aeon K12 FPGA Miner Architecture";
 	rankdir=TD
 	node [shape=box]
-	pow [label="K12 PoW Cores (x7 stage)"]
+	pow [label="K12 PoW Core (x12 stage)"]
 	nsc [label="Nonce Scanning Controller"]
 	ifsm [label="Input Finite State Machine"]
 	ofsm [label="Output Finite State Machine"]
